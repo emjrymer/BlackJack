@@ -50,41 +50,38 @@ print(hand_value)
 
 class Player:
 
-    def __init__(self):
-        # self.hit =
-        # self.stay =
-        # self.bust =
-        self.hand = hand_creation
-        # self.turn =
-        self.value = hand_value
+   def __init__(self):
+       self.hand = hand_creation
+       self.value = hand_value
 
-    def player_hand(self):
-        return self.value
+   def show_player_hand(self):
+       return self.hand
 
-    def show_player_hand(self):
-        return self.hand
+   def player_hand(self):
+       return self.value
 
-    def player_hit(self):
+   def player_hit(self):
        want_hit = input("Do you want to hit? Enter y or n ")
        while True:
            if want_hit == "y":
                print("You've chosen to hit. ")
-               return hit_one
+               print("You're card is " + str(deck.get_value()))
+               return (deck.get_value() + hand_value)
 
            elif want_hit == "n":
                print("You've chosen to stand. ")
                break
 
-    def bust(self):
+player = Player()
+show_hand_player = player.show_player_hand()
+val_player_hand = player.player_hand()
+print(player.player_hit())
+
+'''def bust(self):
         if hand_value <= 21:
             play_on = True
         else:
             play_on = False
-        return play_on
+        return play_on'''
 
-player = Player()
-value_player_hand = player.player_hand()
-show_player_hand = player.show_player_hand()
-
-print(player.player_hit())
 
