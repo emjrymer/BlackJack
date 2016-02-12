@@ -7,6 +7,7 @@ class Deck:
         self.suit = ['spades', 'hearts', 'diamonds', 'clubs']
         self.val = ['ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king']
         self.deck = []
+        create
 
     def make_deck(self):
         for s in self.suit:
@@ -66,21 +67,12 @@ class Deck:
             hand.append(self.give_one_dealer())
         return hand
 
-deck = Deck()
-deck_creation = deck.make_deck()
-hit_one = deck.give_one_player()
-player_hand_creation = deck.create_player_hand()
-
-#print("Your hand: " + str(player_hand_creation))
-player_hand_value = deck.get_player_value(player_hand_creation)
-#print("Your hand value: " + str(player_hand_value))
-
 
 class Player:
 
     def __init__(self):
-        self.hand = player_hand_creation
-        self.value = player_hand_value
+        self.hand = deck.create_player_hand()
+        self.value = deck.get_player_value(self.hand)
 
     def show_player_hand(self):
         return self.hand
@@ -89,38 +81,30 @@ class Player:
         return self.value
 
     def player_hit(self):
-        hand_creation = deck.create_player_hand()
+        print(self.hand, self.value)
         while True:
             want_hit = input("Do you want to hit? Enter y or n ")
             if want_hit == "y":
-                print("You've chosen to hit.")
-                hand_creation.append(deck.give_one_player())
-                print(hand_creation)
-                print(deck.get_player_value(hand_creation))
-                if deck.get_player_value(hand_creation) > 21:
-                    return "LOSER!"
-                elif deck.get_player_value(hand_creation) == 21:
-                    return "BLACKJACK!!"
-
+                print("  You've chosen to hit. \n =*=*=*=*=*=*=*=*=*=*=*= \n     Your New Hand \n =*=*=*=*=*=*=*=*=*=*=*=")
+                self.hand.append(deck.give_one_player())
+                print(self.hand)
+                self.value = deck.get_player_value(self.hand)
+                print(self.value)
+                if player.value > 21:
+                    print("LOSER! You busted! \n =*=*=*=*=*=*=*=*=*=*=*= \n     Dealer's Turn \n =*=*=*=*=*=*=*=*=*=*=*=")
+                elif self.value == 21:
+                    return "Player BLACKJACK!! \n =*=*=*=*=*=*=*=*=*=*=*= \n     Dealer's Turn \n =*=*=*=*=*=*=*=*=*=*=*="
             elif want_hit == "n":
-                if deck.get_player_value(hand_creation) == 21:
-                    return "BLACKJACK!!"
-                print("You've chosen to stand.")
-                return hand_creation
-
-
-player = Player()
-show_hand_player = player.show_player_hand()
-val_player_hand = player.player_hand()
-print(player.player_hit())
-
+                if self.value == 21:
+                    print("Player BLACKJACK!! \n =*=*=*=*=*=*=*=*=*=*=*= \n     Dealer's Turn \n =*=*=*=*=*=*=*=*=*=*=*=")
+                return "   Player, you've chosen to stand. \n =*=*=*=*=*=*=*=*=*=*=*= \n     Dealer's Turn \n =*=*=*=*=*=*=*=*=*=*=*="
 
 
 class Dealer:
 
     def __init__(self):
-        self.hand = player_hand_creation
-        self.value = player_hand_value
+        self.hand = deck.create_dealer_hand()
+        self.value = deck.get_dealer_value(self.hand)
 
     def show_dealer_hand(self):
         return self.hand
@@ -129,42 +113,68 @@ class Dealer:
         return self.value
 
     def dealer_hit(self):
-        dealer_hand_creation = deck.create_dealer_hand()
+        print(self.hand, self.value)
         while True:
-            print(dealer_hand_creation.append(deck.give_one_dealer()))
-            print(dealer_hand_creation)
-            print(deck.get_dealer_value(dealer_hand_creation))
-            if deck.get_dealer_value(dealer_hand_creation) == 21:
-                return "BLACKJACK!!"
-            elif deck.get_dealer_value(dealer_hand_creation) > 17:
-                if deck.get_dealer_value(dealer_hand_creation) < 21:
-                    return "Dealer stands."
-            elif deck.get_dealer_value(dealer_hand_creation) > 21:
-                return "LOSER!"
-            if deck.get_dealer_value(dealer_hand_creation) <= 17:
-                return "Dealer stands."
-
-dealer = Dealer()
-dealer_hand_creation = deck.create_dealer_hand()
-#print("Dealers hand: " + str(dealer_hand_creation))
-dealer_hand_value = deck.get_dealer_value(dealer_hand_creation)
-#print("Dealer hand value: " + str(dealer_hand_value))
-#print(dealer_hand_creation)
-#print(deck.create_dealer_hand())
-print(dealer.dealer_hit())
+            if self.value == 21:
+                return "\n******************* \n Dealer BLACKJACK!! \n   go figure\n******************** \n"
+            elif self.value > 17 and self.value < 21:
+                return "\n              ****************** \n  Dealer stands, may the odds be ever in your favor.\n              ****************** \n"
+            elif self.value > 21:
+                return "\n****************** \n Dealer busts!  What an idiot! \n******************** \n"
+            print("***Dealer Hits***")
+            self.hand.append(deck.give_one_dealer())
+            self.value = deck.get_dealer_value(self.hand)
+            print(self.hand, self.value)
 
 
-'''
-counter = 0
-players = ["Dealer", "Player"]
-index = counter % 2
-while True:
-    if index == 0:
-        "Players Turn"
-        player.player_hit()
+def game():
+
+    game_on = 'y'
+
+    while game_on == 'y':
+
+        deck = Deck()
+        deck.make_deck()
+        player = Player()
+        print(player.player_hit())
+        if player.value > 21:
+            game_on = 'n'
+        dealer = Dealer()
+        print(dealer.dealer_hit())
+        if player.value > 21:
+            print("Player:  LOsERr!  \nDealer:  WINS!!\nHow embarrassing..")
+
+        elif player.value == 21:
+            print("Player:  BLACKJACK!!  \nDealer:  Loses!\nAdd Black Jack skills to your Resume right next to your Loser occupation.")
+            break
+        elif player.value <= 21 and dealer.value <= 21:
+            if player.value > dealer.value:
+                print("Player Wins!!  But it doesn't matter. \nDealer loses \n  ")
+                game_on = 'n'
+            elif player.value == dealer.value:
+                print("PUSH IT!! Push it real good. \nGood luck figuring that one out.")
+                game_on = 'n'
+            else:
+                print("Dealer: Wins!!  like usual \nPlayer: loses.")
+                game_on = 'n'
+        elif player.value <= 21 and dealer.value > 21:
+            print("Player Wins!! You are one lucky person. \nDealer loses")
+            game_on = 'n'
+        elif dealer.value == 21:
+            print("Dealer:  BLACKJACK!!  \nPlayer:  loses!  Are you really surprised?")
+            game_on = 'n'
+        elif dealer.value > 21:
+            print("Dealer:  LOSER!  What an idiot \nPlayer:  Winner!!!")
+            game_on = 'n'
+        elif player.value > 21 and dealer.value > 21:
+            print("No Winner, but TWO LOSERS!")
+            game_on = 'n'
+
     else:
-        "Computer Turn"
-        dealer.dealer_hit()
-'''
-
-if
+        print("The game is over.")
+        game_on = input("Do you want to play again? y/n ").lower
+        if game_on == 'y':
+            game()
+        else:
+            pass
+game()
