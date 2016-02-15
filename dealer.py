@@ -20,7 +20,7 @@ class Dealer:
         while True:
             if self.value == 21:
                 return "\n******************* \n Dealer BLACKJACK!! \n   go figure\n******************** \n"
-            elif self.value > 17 and self.value < 21:
+            elif self.value >= 17 and self.value <= 21:
                 return "\n              ****************** \n  Dealer stands, may the odds be ever in your favor.\n              ****************** \n"
             elif self.value > 21:
                 return "\n****************** \n Dealer busts!  What an idiot! \n******************** \n"

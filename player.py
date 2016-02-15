@@ -27,7 +27,7 @@ class Player:
                 self.value = deck.get_player_value(self.hand)
                 print(self.value)
                 if self.value > 21:
-                    print("LOSER! You busted! \n =*=*=*=*=*=*=*=*=*=*=*= \n     Dealer's Turn \n =*=*=*=*=*=*=*=*=*=*=*=")
+                    return "" #"LOSER! You busted! \n =*=*=*=*=*=*=*=*=*=*=*= \n     Dealer's Turn \n =*=*=*=*=*=*=*=*=*=*=*="
                 elif self.value == 21:
                     return "Player BLACKJACK!! \n =*=*=*=*=*=*=*=*=*=*=*= \n     Dealer's Turn \n =*=*=*=*=*=*=*=*=*=*=*="
             elif want_hit == "n":
