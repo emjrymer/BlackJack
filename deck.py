@@ -65,3 +65,6 @@ class Deck:
         for card in range(2):
             hand.append(self.give_one_dealer())
         return hand
+
+deck = Deck()
+deck.make_deck()

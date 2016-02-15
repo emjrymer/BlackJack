@@ -1,5 +1,7 @@
 from deck import Deck
 
+deck = Deck()
+deck.make_deck()
 
 class Dealer:
 
